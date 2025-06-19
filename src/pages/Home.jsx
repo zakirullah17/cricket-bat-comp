@@ -5,30 +5,7 @@ import CricketBatsCards from '../components/CricketBatsCards';
 const Home = () => {
   return (
     <div className="font-sans">
-      {/* Hero Banner */}
-      {/* <section className="relative bg-gray-900 text-white min-h-[70vh] flex items-center">
-        <div className="absolute inset-0 bg-black/40 z-0"></div>
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              <span className="text-amber-400">M8 Malik</span> Premium Cricket Bats
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-8">
-              Handcrafted in Sialkot using Grade 1 English Willow
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <button className="bg-amber-600 hover:bg-amber-700 text-white font-medium py-3 px-8 rounded flex items-center transition duration-300 group">
-                Shop Collection <FiChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <button className="border-2 border-white hover:bg-white hover:text-black text-white font-medium py-3 px-8 rounded transition duration-300">
-                Our Craftsmanship
-              </button>
-            </div>
-          </div>
-        </div>
-
-        
-      </section> */}
+     
 
       <section className="relative bg-gray-900 text-white min-h-[70vh] flex items-center">
   <div className="absolute inset-0 bg-black/40 z-0"></div>

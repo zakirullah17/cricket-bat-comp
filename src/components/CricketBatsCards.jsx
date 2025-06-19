@@ -89,7 +89,7 @@ const ProductGrid = () => {
       name: "Premium Cricket Bat Pro Edition",
       category: "Professional",
       imageUrls: [
-        "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+        "https://www.mrfsports.com/sites/all/themes/adaptivetheme/at_subtheme/images/home-banner.jpg"
       ],
       price: 299,
       originalPrice: 349,
@@ -102,7 +102,7 @@ const ProductGrid = () => {
       name: "Elite Cricket Bat with Cover",
       category: "Club",
       imageUrls: [
-        "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+        "https://www.prodirectsport.com/-/media/prodirect/project/en/cricket/list-page-banners---new/bats/other/lpb-mixed-cricket-bats-d-180225.jpg"
       ],
       price: 249,
       rating: 5,
@@ -113,7 +113,7 @@ const ProductGrid = () => {
       name: "Junior Cricket Bat Lightweight",
       category: "Junior",
       imageUrls: [
-        "https://images.unsplash.com/photo-1554357927-6e858b960c06?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+        "https://www.mrfsports.com/sites/all/themes/adaptivetheme/at_subtheme/images/junior-kits-listing.png"
       ],
       price: 149,
       originalPrice: 179,
@@ -126,7 +126,7 @@ const ProductGrid = () => {
       name: "Professional Batting Gloves",
       category: "Accessories",
       imageUrls: [
-        "https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+        "https://www.mrfsports.com/sites/all/themes/adaptivetheme/at_subtheme/images/protective_gears_main3.png"
       ],
       price: 59,
       originalPrice: 79,
@@ -136,10 +136,10 @@ const ProductGrid = () => {
     },
     {
       id: 5,
-      name: "Cricket Helmet Pro",
+      name: "Cricket Bag",
       category: "Safety",
       imageUrls: [
-        "https://images.unsplash.com/photo-1593111774242-9dc4850d62f6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+        "https://www.mrfsports.com/sites/default/files/styles/homepage_category_images/public/kitbag-listing-game-changer.png?itok=wRQgG2cx"
       ],
       price: 129,
       rating: 5,
@@ -150,7 +150,7 @@ const ProductGrid = () => {
       name: "Cricket Ball Leather",
       category: "Accessories",
       imageUrls: [
-        "https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+        "https://m.media-amazon.com/images/I/61PocVWz+jL._AC_UL320_.jpg"
       ],
       price: 29,
       originalPrice: 39,
