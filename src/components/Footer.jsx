@@ -1,3 +1,4 @@
+
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaWhatsapp } from 'react-icons/fa';
 
 const Footer = () => {

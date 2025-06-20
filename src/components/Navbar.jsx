@@ -1,178 +1,169 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+
+
+
+
+
+import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-scroll';
+import { FiMenu, FiX, FiShoppingCart } from 'react-icons/fi';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeLink, setActiveLink] = useState('home');
+  const navRef = useRef(null);
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const navLinks = [
+    { id: 'home', label: 'Home' },
+    { id: 'products', label: 'Products' },
+    { id: 'craftsmanship', label: 'Craftsmanship' },
+    { id: 'about', label: 'About' },
+    { id: 'contact', label: 'Contact' },
+  ];
+
+  const handleSetActive = (to) => {
+    setActiveLink(to);
+    if (mobileMenuOpen) setMobileMenuOpen(false);
+  };
 
   return (
-    <nav className="bg-gray-800 text-white shadow-lg">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
+    <nav 
+      ref={navRef}
+      className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-2' : 'bg-yellow-100 py-4'}`}
+    >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center">
           {/* Logo */}
-          <Link to="/" className="flex-shrink-0 flex items-center">
-            <span className="text-xl font-bold">Cricket Bat Co.</span>
-          </Link>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8">
-            <Link to="/" className="hover:text-amber-400 transition">Home</Link>
-            <Link to="/products" className="hover:text-amber-400 transition">Products</Link>
-            <Link to="/how-we-build" className="hover:text-amber-400 transition">How We Build</Link>
-            <Link to="/about" className="hover:text-amber-400 transition">About</Link>
-            <Link to="/contact" className="hover:text-amber-400 transition">Contact</Link>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-300 hover:text-white focus:outline-none"
+          <motion.div 
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center"
+          >
+            <Link 
+              to="home" 
+              smooth={true} 
+              duration={500}
+              className="text-2xl font-bold text-amber-600 flex items-center cursor-pointer"
+              onClick={() => handleSetActive('home')}
             >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {isOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
+              <span className="bg-amber-600 text-white px-2 py-1 rounded mr-2">XYZ</span>
+              <span className="hidden sm:inline">Bats</span>
+            </Link>
+          </motion.div>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-gray-700 px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-600">Home</Link>
-          <Link to="/products" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-600">Products</Link>
-          <Link to="/how-we-build" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-600">How We Build</Link>
-          <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-600">About</Link>
-          <Link to="/contact" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-600">Contact</Link>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.id}
+                to={link.id} 
+                smooth={true} 
+                duration={500}
+                spy={true}
+                onSetActive={handleSetActive}
+                className={`relative cursor-pointer transition-colors ${activeLink === link.id ? 'text-amber-600 font-medium' : 'text-gray-700 hover:text-amber-600'}`}
+              >
+                {link.label}
+                {activeLink === link.id && (
+                  <motion.div 
+                    layoutId="nav-underline"
+                    className="absolute bottom-0 left-0 w-full h-0.5 bg-amber-600"
+                    transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+              </Link>
+            ))}
+            
+            {/* Cart Icon with badge */}
+            <motion.div 
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative cursor-pointer text-gray-700 hover:text-amber-600 ml-4"
+            >
+              <FiShoppingCart className="w-6 h-6" />
+              <span className="absolute -top-2 -right-2 bg-amber-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                3
+              </span>
+            </motion.div>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button 
+            className="md:hidden text-gray-700 focus:outline-none"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? (
+              <FiX className="w-6 h-6" />
+            ) : (
+              <FiMenu className="w-6 h-6" />
+            )}
+          </button>
         </div>
-      )}
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className={`md:hidden mt-4 ${scrolled ? 'bg-white' : 'bg-gray-50'} rounded-lg shadow-lg`}
+            >
+              <div className="px-4 py-2 space-y-4">
+                {navLinks.map((link) => (
+                  <Link 
+                    key={link.id}
+                    to={link.id} 
+                    smooth={true} 
+                    duration={500}
+                    spy={true}
+                    onSetActive={handleSetActive}
+                    className={`block px-4 py-2 rounded-lg transition-colors ${activeLink === link.id ? 'bg-amber-100 text-amber-600 font-medium' : 'text-gray-700 hover:bg-gray-100'}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <div className="flex items-center px-4 py-2 text-gray-700">
+                  <FiShoppingCart className="w-5 h-5 mr-3" />
+                  Cart <span className="ml-2 bg-amber-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </nav>
   );
 };
 
 export default Navbar;
-
-
-
-
-
-// import { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
-// import { FiSun, FiMoon, FiShoppingCart, FiUser, FiX, FiMenu } from 'react-icons/fi';
-
-// const Navbar = () => {
-//   const [isOpen, setIsOpen] = useState(false);
-//   const [darkMode, setDarkMode] = useState(() => {
-//     if (typeof window !== 'undefined') {
-//       return (
-//         localStorage.getItem('darkMode') === 'true' ||
-//         (!localStorage.getItem('darkMode') &&
-//           window.matchMedia('(prefers-color-scheme: dark)').matches)
-//       );
-//     }
-//     return false;
-//   });
-
-//   const toggleDarkMode = () => {
-//     const newMode = !darkMode;
-//     setDarkMode(newMode);
-//     localStorage.setItem('darkMode', newMode.toString());
-//   };
-
-//   useEffect(() => {
-//     document.documentElement.classList.toggle('dark', darkMode);
-//   }, [darkMode]);
-
-//   return (
-//     <nav className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-md sticky top-0 z-50">
-//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-//         <div className="flex justify-between items-center h-16">
-//           {/* Logo */}
-//           <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-amber-600 bg-clip-text text-transparent">
-//             CricketPro
-//           </Link>
-
-//           {/* Desktop Menu */}
-//           <div className="hidden md:flex items-center space-x-6">
-//             {['Home', 'Products', 'Craftsmanship', 'About Us', 'Contact'].map((text, i) => (
-//               <Link
-//                 key={i}
-//                 to={`/${text.toLowerCase().replace(/\s+/g, '-')}`}
-//                 className="hover:text-amber-500 dark:hover:text-amber-400 transition-colors"
-//               >
-//                 {text}
-//               </Link>
-//             ))}
-
-//             <button onClick={toggleDarkMode}>
-//               {darkMode ? <FiSun className="h-5 w-5" /> : <FiMoon className="h-5 w-5" />}
-//             </button>
-
-//             <Link to="/cart" className="relative">
-//               <FiShoppingCart className="h-5 w-5" />
-//               <span className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-//                 3
-//               </span>
-//             </Link>
-
-//             <Link to="/account">
-//               <FiUser className="h-5 w-5" />
-//             </Link>
-//           </div>
-
-//           {/* Mobile Menu Button */}
-//           <div className="md:hidden flex items-center space-x-3">
-//             <button onClick={toggleDarkMode}>
-//               {darkMode ? <FiSun className="h-5 w-5" /> : <FiMoon className="h-5 w-5" />}
-//             </button>
-//             <button onClick={() => setIsOpen(!isOpen)}>
-//               {isOpen ? <FiX className="h-6 w-6" /> : <FiMenu className="h-6 w-6" />}
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Mobile Dropdown Menu */}
-//       {isOpen && (
-//         <div className="md:hidden bg-white dark:bg-gray-900 px-4 pb-4 space-y-3 border-t dark:border-gray-800 transition-all duration-300">
-//           {['Home', 'Products', 'Craftsmanship', 'About Us', 'Contact'].map((text, i) => (
-//             <Link
-//               key={i}
-//               to={`/${text.toLowerCase().replace(/\s+/g, '-')}`}
-//               onClick={() => setIsOpen(false)}
-//               className="block py-2 border-b dark:border-gray-700"
-//             >
-//               {text}
-//             </Link>
-//           ))}
-
-//           <div className="flex items-center justify-start space-x-6 pt-3">
-//             <Link to="/cart" className="relative">
-//               <FiShoppingCart className="h-6 w-6" />
-//               <span className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-//                 3
-//               </span>
-//             </Link>
-
-//             <Link to="/account">
-//               <FiUser className="h-6 w-6" />
-//             </Link>
-//           </div>
-//         </div>
-//       )}
-//     </nav>
-//   );
-// };
-
-// export default Navbar;
-
-
-
-
-
-
-

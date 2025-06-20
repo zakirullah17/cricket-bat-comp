@@ -21,10 +21,10 @@ function App() {
           
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
+            {/* <Route path="/products" element={<Products />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
-            <Route path="/how-we-build" element={<BuildProduct />} />
+            <Route path="/how-we-build" element={<BuildProduct />} /> */}
           </Routes>
         </main>
         <Footer />
